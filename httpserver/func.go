@@ -4,7 +4,7 @@
  * @filename:
  * @version:
  * @Description:
- * @LastEditTime: 2025-07-21 06:47:29
+ * @LastEditTime: 2025-07-21 06:59:42
  */
 
 package httpserver
@@ -22,17 +22,16 @@ import (
 var SingleConfig *config.SingleConfig
 
 func HandleConfig(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	body, _ := io.ReadAll(r.Body)
-	singleConfig := config.DecodeSingleConfig(body)
+	SingleConfig = config.DecodeSingleConfig(body)
 
-	clog.Infof("📥 [%s] Body: %s\n", "/StartChain", string(body))
-	clog.Infof("📥 [%s] Config: %+v\n", "/StartChain", singleConfig)
-	SingleConfig = singleConfig
+	clog.Infof("📥 [%s] Body: %s\n", "/Config", string(body))
+	clog.Infof("📥 [%s] Config: %+v\n", "/Config", SingleConfig)
 
 	resp := Response{
 		Status:  "success",
@@ -51,11 +50,11 @@ func HandleStartChain(w http.ResponseWriter, r *http.Request) {
 	}
 	body, _ := io.ReadAll(r.Body)
 
-	clog.Infof("📥 [%s] Body: %s\n", "/StartChain", string(body))
+	clog.Infof("📥 [%s] Body: %s\n", "/startChain", string(body))
 
 	resp := Response{
 		Status:  "success",
-		Message: fmt.Sprintf("%s received", "/StartChain"),
+		Message: fmt.Sprintf("%s received", "/startChain"),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -70,11 +69,11 @@ func HandleSetupContracts(w http.ResponseWriter, r *http.Request) {
 	}
 	body, _ := io.ReadAll(r.Body)
 
-	clog.Infof("📥 [%s] Body: %s\n", "/SetupContracts", string(body))
+	clog.Infof("📥 [%s] Body: %s\n", "/setupContracts", string(body))
 
 	resp := Response{
 		Status:  "success",
-		Message: fmt.Sprintf("%s received", "/SetupContracts"),
+		Message: fmt.Sprintf("%s received", "/setupContracts"),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -89,11 +88,11 @@ func HandleStartRelayer(w http.ResponseWriter, r *http.Request) {
 	}
 	body, _ := io.ReadAll(r.Body)
 
-	clog.Infof("📥 [%s] Body: %s\n", "/StartRelayer", string(body))
+	clog.Infof("📥 [%s] Body: %s\n", "/startRelayer", string(body))
 
 	resp := Response{
 		Status:  "success",
-		Message: fmt.Sprintf("%s received", "/StartRelayer"),
+		Message: fmt.Sprintf("%s received", "/startRelayer"),
 	}
 
 	w.Header().Set("Content-Type", "application/json")

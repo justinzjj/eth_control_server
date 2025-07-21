@@ -4,11 +4,13 @@
  * @filename:
  * @version:
  * @Description:
- * @LastEditTime: 2025-07-21 06:22:46
+ * @LastEditTime: 2025-07-21 07:04:51
  */
 package config
 
 import (
+	"encoding/json"
+
 	"github.com/BurntSushi/toml"
 	clog "github.com/kpango/glg"
 )
@@ -26,7 +28,7 @@ func LoadConfig(path string) *ServerConfig {
 // 解码获得 body中的配置文件
 func DecodeSingleConfig(body []byte) *SingleConfig {
 	var cfg SingleConfig
-	if err := toml.Unmarshal(body, &cfg); err != nil {
+	if err := json.Unmarshal(body, &cfg); err != nil {
 		clog.Errorf("Failed to decode config: %v", err)
 	}
 	return &cfg

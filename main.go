@@ -4,7 +4,7 @@
  * @filename:
  * @version:
  * @Description:
- * @LastEditTime: 2025-07-21 06:48:44
+ * @LastEditTime: 2025-07-21 06:58:54
  */
 package main
 
@@ -22,9 +22,9 @@ func main() {
 
 	// 注册路由与对应处理函数
 	engine.Handle("/config", httpserver.HandleConfig)
-	engine.Handle("/StartChain", httpserver.HandleStartChain)
-	engine.Handle("/SetupContracts", httpserver.HandleSetupContracts)
-	engine.Handle("/StartRelayer", httpserver.HandleStartRelayer)
+	engine.Handle("/startChain", httpserver.HandleStartChain)
+	engine.Handle("/setupContracts", httpserver.HandleSetupContracts)
+	engine.Handle("/startRelayer", httpserver.HandleStartRelayer)
 
 	// 启动 HTTP 服务
 	if err := engine.Start(); err != nil {
