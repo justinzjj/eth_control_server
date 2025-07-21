@@ -4,7 +4,7 @@
  * @filename:
  * @version:
  * @Description:
- * @LastEditTime: 2025-07-21 06:59:42
+ * @LastEditTime: 2025-07-21 08:51:59
  */
 
 package httpserver
@@ -21,6 +21,7 @@ import (
 
 var SingleConfig *config.SingleConfig
 
+// 1. 接收 初始化config
 func HandleConfig(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -43,6 +44,7 @@ func HandleConfig(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resp)
 }
 
+// 2. 启动链
 func HandleStartChain(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -62,6 +64,7 @@ func HandleStartChain(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resp)
 }
 
+// 3. 部署合约 初始化合约
 func HandleSetupContracts(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -81,6 +84,7 @@ func HandleSetupContracts(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resp)
 }
 
+// 4. 启动 relayer
 func HandleStartRelayer(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -93,6 +97,26 @@ func HandleStartRelayer(w http.ResponseWriter, r *http.Request) {
 	resp := Response{
 		Status:  "success",
 		Message: fmt.Sprintf("%s received", "/startRelayer"),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(resp)
+}
+
+// 5. 向 verify server 注册 relayer
+func HandleSubscribeRelayer(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	body, _ := io.ReadAll(r.Body)
+
+	clog.Infof("📥 [%s] Body: %s\n", "/subscribeRelayer", string(body))
+
+	resp := Response{
+		Status:  "success",
+		Message: fmt.Sprintf("%s received", "/subscribeRelayer"),
 	}
 
 	w.Header().Set("Content-Type", "application/json")

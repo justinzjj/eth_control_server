@@ -4,7 +4,7 @@
  * @filename:
  * @version:
  * @Description:
- * @LastEditTime: 2025-07-21 06:58:54
+ * @LastEditTime: 2025-07-21 08:51:47
  */
 package main
 
@@ -25,6 +25,7 @@ func main() {
 	engine.Handle("/startChain", httpserver.HandleStartChain)
 	engine.Handle("/setupContracts", httpserver.HandleSetupContracts)
 	engine.Handle("/startRelayer", httpserver.HandleStartRelayer)
+	engine.Handle("/subscribeRelayer", httpserver.HandleSubscribeRelayer)
 
 	// 启动 HTTP 服务
 	if err := engine.Start(); err != nil {
